@@ -14,7 +14,7 @@ class TimerModel: ObservableObject{
     
     @Published var timerData: TimerData?
 
-    //timer view data
+    //time view data
     @Published var timerCount: TimeInterval
     @Published var restShortCount: TimeInterval
 
@@ -23,6 +23,8 @@ class TimerModel: ObservableObject{
     
     @Published var timer: Timer?
     @Published var rest: Timer?
+    @Published var hungerTimer: Timer?
+    
     
     
     @Published var isRunning: Bool = false
@@ -44,29 +46,78 @@ class TimerModel: ObservableObject{
         self.viewCoin = 99
         self.viewHunger = 88
         
-        let realm = try! Realm()
-        timerData = realm.objects(TimerData.self).first
-        
-        if let timerData = self.timerData {
-            self.timerCount = timerData.timeTimer
-            self.restShortCount = timerData.timeShort
-            self.viewCoin = timerData.coin
-            self.viewHunger = timerData.hunger
-               }
+        loadData()
+        startHungerTimer()
         
         }
     
-    //饱食度
-    func updateHunger() {
-            guard let timerData = timerData else { return }
-
+    // 更新
+    func loadData() {
             let realm = try! Realm()
-            try! realm.write {
-                if timerData.hunger > 0 {
-                    timerData.hunger -= 1
-                }
+            if let updatedTimerData = realm.objects(TimerData.self).first {
+                self.timerData = updatedTimerData
+                self.timerCount = updatedTimerData.timeTimer
+                self.restShortCount = updatedTimerData.timeShort
+                self.viewCoin = updatedTimerData.coin
+                self.viewHunger = updatedTimerData.hunger
             }
         }
+    
+    //饱食度
+    func startHungerTimer() {
+            hungerTimer = Timer.scheduledTimer(withTimeInterval: 3600, repeats: true) { [weak self] _ in
+                self?.decreaseHunger()
+            }
+        }
+    
+    func decreaseHunger() {
+        
+        
+           guard let timerData = self.timerData else { return }
+           let realm = try! Realm()
+           try! realm.write {
+               let now = Date()
+               let difference = Calendar.current.dateComponents([.hour], from: timerData.hungerDate, to: now)
+    
+               timerData.hunger -= Int(difference.hour ?? 0)
+               timerData.hungerDate = now
+               
+               if timerData.hunger < 0 {
+                   timerData.hunger = 0
+               }
+           }
+
+           self.viewHunger = timerData.hunger
+       }
+    
+//    func lastHunger() {
+//        
+//        if let lastExitTime = UserDefaults.standard.object(forKey: "lastExitTime") as? Date {
+//            
+//            let now = Date()
+//            
+//            let difference = Calendar.current.dateComponents([.hour], from: lastExitTime, to: now)
+//            
+//            if let minuteDifference = difference.minute {
+//                guard let timerData = self.timerData else { return }
+//                let realm = try! Realm()
+//
+//                try! realm.write {
+//                    
+//                    timerData.hunger -= Int(minuteDifference)
+//                    
+//                    if timerData.hunger < 0 {
+//                        timerData.hunger = 0
+//                    }
+//                }
+//
+//                self.viewHunger = timerData.hunger
+//            }
+//        }
+//       
+//    }
+
+
     
     //    //コイン消費
     //    func coinPaid() {

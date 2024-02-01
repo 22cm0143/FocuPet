@@ -20,10 +20,11 @@ class TimerData: Object,ObjectKeyIdentifiable{
     @Persisted var numDayGoal: Int
     @Persisted var startDate = Date()
     @Persisted var endDate = Date()
+    @Persisted var hungerDate = Date()
     
     
     //other
-    @Persisted var coin: Int
+    @Persisted var coin : Int
     @Persisted var hunger: Int
     
 

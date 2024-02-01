@@ -101,6 +101,9 @@ struct TimeView: View {
         
             Spacer()
         }//NavigationStack
+        .onAppear {
+                    self.timerContorller.loadData()
+                }
         .navigationBarBackButtonHidden(true)
   
     }//BODY

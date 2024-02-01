@@ -20,7 +20,7 @@ struct ShopCatVIewModel: View {
             VStack{
                 ForEach(catContorller.cats, id: \.id) { cat in
                     NavigationLink(
-                        destination: SubShopView(timerContorller: TimerModel(),catContorller: CatModel(), timerData: TimerData(), cat: cat)){
+                        destination: SubShopView(timerContorller: TimerModel() ,catContorller: catContorller,cat:cat)){
                             CatRow(cat: cat)
                         }
                     

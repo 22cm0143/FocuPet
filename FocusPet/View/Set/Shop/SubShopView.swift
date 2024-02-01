@@ -10,7 +10,8 @@ import RealmSwift
 
 struct SubShopView: View {
 
-    @Environment(\.realm) var realm
+   
+    
     @Environment(\.dismiss) var dismiss
     @ObservedObject var timerContorller: TimerModel
     @ObservedObject var catContorller: CatModel
@@ -18,6 +19,16 @@ struct SubShopView: View {
     @ObservedRealmObject var timerData : TimerData
     @ObservedRealmObject var cat: Cat
     
+    
+    init(timerContorller: TimerModel, catContorller: CatModel,cat: Cat) {
+        let realm = try! Realm()
+        self.cat = cat
+        self.timerData = realm.objects(TimerData.self).first ?? TimerData()
+        self.timerContorller = timerContorller
+        self.catContorller = catContorller
+    }
+   
+   
     
     var body: some View {
         VStack{
@@ -71,10 +82,7 @@ struct SubShopView: View {
             }
             .alert("\(cat.price)コインで購入しますか？",isPresented: $catContorller.isBuyAlert){
                 Button("はい",role: .destructive){
-                    try? realm.write{
-                        timerData.coin -= cat.price
-                        cat.isBought = true
-                    }
+                    isBoughtTure()
                 }
                 
                 Button("いいえ",role: .cancel){
@@ -100,9 +108,7 @@ struct SubShopView: View {
             }
             .alert("これを選択しますか？",isPresented: $catContorller.isSelectAlert){
                 Button("はい",role: .destructive){
-                    try? realm.write{
-                        cat.isSelected = true
-                    }
+                    isSelectedToggle()
                 }
                 
                 Button("いいえ",role: .cancel){
@@ -111,9 +117,7 @@ struct SubShopView: View {
             }
             .alert("選択をキャンセルしますか？",isPresented: $catContorller.isCancelAlert){
                 Button("はい",role: .destructive){
-                    try? realm.write{
-                        cat.isSelected = false      
-                    }
+                   isSelectedToggle()
                 }
                 
                 Button("いいえ",role: .cancel){
@@ -131,9 +135,45 @@ struct SubShopView: View {
         .padding()
     }
 }
+extension SubShopView{
+    
+    func isSelectedToggle() {
+        if cat.isFrozen {
+            if let thawedCat = cat.thaw() {
+                let realm = try! Realm()
+                try! realm.write {
+                    thawedCat.isSelected.toggle()
+                }
+            }
+        }
 
+    }//isSelectedToggle
+    
+    func isBoughtTure() {
+
+        if cat.isFrozen  {
+            if let thawedCat = cat.thaw() {
+                let realm = try! Realm()
+                try? realm.write{
+                   //timerData.coin -= cat.price
+                    thawedCat.isBought = true
+                }
+            }
+        }
+        
+        if timerData.isFrozen {
+            if let thawedData = timerData.thaw() {
+                let realm = try! Realm()
+                try? realm.write{
+                    thawedData.coin -= cat.price
+                }
+            }
+        }
+    }
+}
 
 
 #Preview {
-    SubShopView(timerContorller: TimerModel(),catContorller: CatModel(), timerData: TimerData(), cat: Cat(price: 25,catname: "Cat1", catimage: "cat1",isBought: false,isSelected: false))
+    
+    SubShopView(timerContorller: TimerModel(),catContorller: CatModel(), cat: Cat())
 }

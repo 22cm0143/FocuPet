@@ -47,6 +47,15 @@ class WeekModel: ObservableObject {
     var selectedWeekdays: [Int] {
         weeks.filter { $0.isWeekSelected }.map { $0.id }
     }
+    
+    func updateWeek(week: Week) {
+            let realm = try! Realm()
+            try! realm.write {
+                week.isWeekSelected.toggle()
+            }
+           
+            self.weeks = Array(realm.objects(Week.self))
+        }
 }
 
 

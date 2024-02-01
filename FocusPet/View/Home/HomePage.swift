@@ -18,11 +18,11 @@ struct HomePage: View {
     
     @ObservedObject var timerContorller: TimerModel
     //@ObservedRealmObject var timerData : TimerData
-    
+
+   
     var body: some View {
         
         NavigationView{
-            
           
             VStack(alignment: .center){
                 

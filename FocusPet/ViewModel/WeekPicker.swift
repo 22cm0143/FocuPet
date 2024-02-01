@@ -16,15 +16,17 @@ struct WeekPicker: View {
     var body: some View {
         HStack(spacing: 20) {
             ForEach(weekController.weeks, id: \.id) { week in
-                WeekRow( week: week)
+                WeekRow( weekController: WeekModel(), week: week)
                    }
                }
+        
               
     }
 }
 
 struct WeekRow: View {
     
+    @ObservedObject var weekController: WeekModel
 
     var week : Week
     
@@ -32,15 +34,12 @@ struct WeekRow: View {
         
         Button(action: {
             //TODO: REALM Save isWeekSelected
-           let realm = try? Realm()
-            try? realm?.write{
-                self.week.isWeekSelected.toggle()
-            }
+            self.weekController.updateWeek(week: week)
         }) {
             Text(week.weekdays)
                 .foregroundColor(.white)
                 .frame(width: 35, height: 35)
-                .background(week.isWeekSelected ? Color.orange : Color.gray)
+                .background(self.week.isWeekSelected ? Color.orange : Color.gray)
                 .clipShape(Circle())
                 .font(.title3)
         }

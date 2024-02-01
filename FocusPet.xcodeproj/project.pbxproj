@@ -26,6 +26,7 @@
 		89AFC1892B15CEAF000BF2D2 /* AgreementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89AFC1882B15CEAF000BF2D2 /* AgreementView.swift */; };
 		89B513B12B1D713900FE250E /* TimerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89B513B02B1D713900FE250E /* TimerModel.swift */; };
 		89B513B82B1EF06E00FE250E /* FullScreenTimeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89B513B72B1EF06E00FE250E /* FullScreenTimeView.swift */; };
+		89BEA48D2B6B56C1006DA056 /* RealmMigrator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89BEA48C2B6B56C1006DA056 /* RealmMigrator.swift */; };
 		89D3D5982B2FE7940056E902 /* FSCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = 89D3D5972B2FE7940056E902 /* FSCalendar */; };
 		89D3D59C2B2FEC570056E902 /* CalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89D3D59B2B2FEC570056E902 /* CalendarViewController.swift */; };
 		89DE27D92B564857001D4AE7 /* ShopCatVIewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89DE27D82B564857001D4AE7 /* ShopCatVIewModel.swift */; };
@@ -55,6 +56,7 @@
 		89AFC1882B15CEAF000BF2D2 /* AgreementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgreementView.swift; sourceTree = "<group>"; };
 		89B513B02B1D713900FE250E /* TimerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerModel.swift; sourceTree = "<group>"; };
 		89B513B72B1EF06E00FE250E /* FullScreenTimeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullScreenTimeView.swift; sourceTree = "<group>"; };
+		89BEA48C2B6B56C1006DA056 /* RealmMigrator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmMigrator.swift; sourceTree = "<group>"; };
 		89D3D59B2B2FEC570056E902 /* CalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewController.swift; sourceTree = "<group>"; };
 		89DE27D82B564857001D4AE7 /* ShopCatVIewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopCatVIewModel.swift; sourceTree = "<group>"; };
 		89DE27DA2B5649D0001D4AE7 /* SubShopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubShopView.swift; sourceTree = "<group>"; };
@@ -124,6 +126,7 @@
 				89DE27E02B58B9B1001D4AE7 /* CatModel.swift */,
 				89DE27E42B58F2BA001D4AE7 /* WeekModel.swift */,
 				89DE27ED2B5DEEE4001D4AE7 /* RealmManager.swift */,
+				89BEA48C2B6B56C1006DA056 /* RealmMigrator.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -292,6 +295,7 @@
 				891F1E392B2056CE00FCCBF3 /* BreakView.swift in Sources */,
 				89DE27E52B58F2BA001D4AE7 /* WeekModel.swift in Sources */,
 				89AFC15B2B141EFF000BF2D2 /* ContentView.swift in Sources */,
+				89BEA48D2B6B56C1006DA056 /* RealmMigrator.swift in Sources */,
 				89B513B12B1D713900FE250E /* TimerModel.swift in Sources */,
 				89AFC1832B15CDCA000BF2D2 /* ShopView.swift in Sources */,
 				89B513B82B1EF06E00FE250E /* FullScreenTimeView.swift in Sources */,

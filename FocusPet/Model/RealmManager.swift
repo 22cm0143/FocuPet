@@ -14,7 +14,7 @@ class RealmManager{
         
         do {
             // 创建或获取 Realm 实例
-            let realm = try? Realm()
+            let realm = try Realm()
 
             // 创建 TimerData 对象
             let timerData = TimerData()
@@ -26,18 +26,22 @@ class RealmManager{
             timerData.numDayGoal = 1
             timerData.startDate = Date()
             timerData.endDate = Date()
+            timerData.hungerDate = Date()
             
             timerData.coin = 200
             timerData.hunger = 100
       
             // 创建 Cat 对象
+            let existingCats = realm.objects(Cat.self).map { $0.catname }
             let cats = [Cat(price: 0, catname: "Cat1", catimage: "cat1", isBought: true, isSelected: true),
                         Cat(price: 30, catname: "Cat2", catimage: "cat1", isBought: false, isSelected: false),
                         Cat(price: 35, catname: "Cat3", catimage: "cat1", isBought: false, isSelected: false)
                         ]
-            
+            let catsToAdd = cats.filter { !existingCats.contains($0.catname) }
+
             
             // 创建 Week 对象
+            let existingWeeks = realm.objects(Week.self).map{$0.weekdays}
             let weeks = [Week(id: 1, weekdays: "日", isWeekSelected: false),
                          Week(id: 2, weekdays: "月", isWeekSelected: false),
                          Week(id: 3, weekdays: "火", isWeekSelected: false),
@@ -46,20 +50,20 @@ class RealmManager{
                          Week(id: 6, weekdays: "金", isWeekSelected: false),
                          Week(id: 7, weekdays: "土", isWeekSelected: false)
                         ]
+            let weeksToAdd = weeks.filter{ !existingWeeks.contains($0.weekdays)}
            
 
             // 将对象保存到 Realm 数据库
-            try realm?.write {
+            try realm.write {
+               
+                realm.add(timerData)
                 
-                realm?.add(timerData)
+                realm.add(catsToAdd)
                 
-                realm?.add(cats)
-                
-                realm?.add(weeks)
+                realm.add(weeksToAdd)
             }
         } catch {
             print("An error occurred while writing to Realm: \(error)")
         }
     }
-
 }

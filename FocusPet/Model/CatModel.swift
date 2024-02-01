@@ -23,8 +23,6 @@ class CatModel: ObservableObject {
            realm = try! Realm()
            cats = Array(realm.objects(Cat.self))
        }
-    
-   
 }
 
 class Cat: Object,ObjectKeyIdentifiable{

@@ -86,7 +86,7 @@ struct ProjectView: View {
             HStack{
                 Text("持続期間：")
                 HStack{
-                    DatePicker("Start Date", selection: $timerData.startDate, displayedComponents: .date)
+                    DatePicker("", selection: $timerData.startDate, displayedComponents: .date)
                         .accentColor(.orange)
                         
                     Text(" ~")
@@ -94,7 +94,7 @@ struct ProjectView: View {
                         .font(.system(size: 20))
                         .foregroundColor(Color.orange)
                     
-                    DatePicker("End Date", selection: $timerData.endDate, displayedComponents: .date)
+                    DatePicker("", selection: $timerData.endDate, displayedComponents: .date)
                         .accentColor(.orange)
      
                 }
@@ -102,19 +102,21 @@ struct ProjectView: View {
                 
                 
             }
-            .padding(.top,-80)
+            
    
         
             //繰り返す曜日
             VStack(alignment: .leading){
                 Text("繰り返す曜日：")
                 .padding(.bottom)
+                .padding(.leading,10 )
                 HStack(alignment: .center){
                     Spacer()
                     WeekPicker(weekController:  weekController)
                 }
             }
-            .padding(.top,-80)
+            
+           
        
             
         }//VStack
@@ -153,6 +155,7 @@ struct ProjectView: View {
 
 extension ProjectView {
     
+    
     func upTimerData() {
         
         let realm = try! Realm()
@@ -168,6 +171,8 @@ extension ProjectView {
                 timerData.endDate = $timerData.endDate.wrappedValue
             }
         }
+        
+        timerContorller.timerData = timerData
     }
 }
 

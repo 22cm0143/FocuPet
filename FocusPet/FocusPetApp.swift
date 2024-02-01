@@ -10,15 +10,18 @@ import SwiftUI
 @main
 struct FocusPetApp: App {
     
+    @Environment(\.scenePhase) private var scenePhase
+    
     init() {
         RealmManager().realmManager()
     }
     
     var body: some Scene {
         WindowGroup {
+            
             ContentView()
                 .environment(\.colorScheme, .light)
-           
+                .environment(\.realmConfiguration,RealmMigrator.configuration)
         }
     }
 }
